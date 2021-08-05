@@ -164,7 +164,10 @@ def str_log(kind, msg,
             msg_color=&#39;cyan&#39;,
             msg_bg_color=&#34;&#34;,
             t_color=&#34;&#34;,
-            t_bg_color=&#34;&#34;):
+            t_bg_color=&#34;&#34;,
+            n=10,
+            m=20,
+            ):
     &#34;&#34;&#34;
     Create rich logging string.
 
@@ -185,17 +188,32 @@ def str_log(kind, msg,
     :param t_color: Time text color.
     :param t_bg_color: Time background color.
     &#34;&#34;&#34;
-    # Print current time
+    # Current time
     t = datetime.now().strftime(&#34;%H:%M:%S&#34;)
-    str_t    = str_color(t,    t_color,    t_bg_color)
-    # Print log kind
-    str_kind = str_color(kind, kind_color, kind_bg_color)
-    # Print log
-    str_msg  = str_color(msg,  msg_color,  msg_bg_color)
 
-    r = join_set_distance(str_t + &#34; ::&#34;, str_kind, 15)
-    r = join_set_distance(r, &#34;::&#34;, 47)
-    r = join_set_distance(r, str_msg, len(r))
+    # Set distances
+    r = join_set_distance(t + &#34; ::&#34;, kind, n)
+    r = join_set_distance(r, &#34; ::&#34;, m)
+    r = join_set_distance(r, msg, len(r))
+
+    str_t, str_kind, str_msg = r.split(&#34; :: &#34;)
+
+    # Take care not to color whitespace for KIND string
+    #     It is assumed that all possible whitespace has
+    #     been added by &lt;&lt;join_set_distance&gt;&gt; and is thus
+    #     placed at the end of the string.
+    n0 = len(str_kind)
+    str_kind = str_kind.rstrip()
+    n1 = len(str_kind)
+    n_ws = n0 - n1
+
+    # Color
+    c_str_t    = str_color(str_t,    t_color,    t_bg_color)
+    c_str_kind = str_color(str_kind, kind_color, kind_bg_color) + &#34; &#34;*n_ws
+    c_str_msg  = str_color(str_msg,  msg_color,  msg_bg_color)
+
+    # Join in final string
+    r = &#34; :: &#34;.join([c_str_t, c_str_kind, c_str_msg])
     return r
 
 
@@ -632,7 +650,7 @@ cases the ANSI codes will be rendered as text as well.
 </details>
 </dd>
 <dt id="alexandria.shell.str_log"><code class="name flex">
-<span>def <span class="ident">str_log</span></span>(<span>kind, msg, kind_color='black', kind_bg_color='white', msg_color='cyan', msg_bg_color='', t_color='', t_bg_color='')</span>
+<span>def <span class="ident">str_log</span></span>(<span>kind, msg, kind_color='black', kind_bg_color='white', msg_color='cyan', msg_bg_color='', t_color='', t_bg_color='', n=10, m=20)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create rich logging string.</p>
@@ -660,7 +678,10 @@ parameters.
             msg_color=&#39;cyan&#39;,
             msg_bg_color=&#34;&#34;,
             t_color=&#34;&#34;,
-            t_bg_color=&#34;&#34;):
+            t_bg_color=&#34;&#34;,
+            n=10,
+            m=20,
+            ):
     &#34;&#34;&#34;
     Create rich logging string.
 
@@ -681,17 +702,32 @@ parameters.
     :param t_color: Time text color.
     :param t_bg_color: Time background color.
     &#34;&#34;&#34;
-    # Print current time
+    # Current time
     t = datetime.now().strftime(&#34;%H:%M:%S&#34;)
-    str_t    = str_color(t,    t_color,    t_bg_color)
-    # Print log kind
-    str_kind = str_color(kind, kind_color, kind_bg_color)
-    # Print log
-    str_msg  = str_color(msg,  msg_color,  msg_bg_color)
 
-    r = join_set_distance(str_t + &#34; ::&#34;, str_kind, 15)
-    r = join_set_distance(r, &#34;::&#34;, 47)
-    r = join_set_distance(r, str_msg, len(r))
+    # Set distances
+    r = join_set_distance(t + &#34; ::&#34;, kind, n)
+    r = join_set_distance(r, &#34; ::&#34;, m)
+    r = join_set_distance(r, msg, len(r))
+
+    str_t, str_kind, str_msg = r.split(&#34; :: &#34;)
+
+    # Take care not to color whitespace for KIND string
+    #     It is assumed that all possible whitespace has
+    #     been added by &lt;&lt;join_set_distance&gt;&gt; and is thus
+    #     placed at the end of the string.
+    n0 = len(str_kind)
+    str_kind = str_kind.rstrip()
+    n1 = len(str_kind)
+    n_ws = n0 - n1
+
+    # Color
+    c_str_t    = str_color(str_t,    t_color,    t_bg_color)
+    c_str_kind = str_color(str_kind, kind_color, kind_bg_color) + &#34; &#34;*n_ws
+    c_str_msg  = str_color(str_msg,  msg_color,  msg_bg_color)
+
+    # Join in final string
+    r = &#34; :: &#34;.join([c_str_t, c_str_kind, c_str_msg])
     return r</code></pre>
 </details>
 </dd>
