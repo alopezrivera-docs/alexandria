@@ -165,8 +165,8 @@ def str_log(kind, msg,
             msg_bg_color=&#34;&#34;,
             t_color=&#34;&#34;,
             t_bg_color=&#34;&#34;,
-            n=10,
-            m=20,
+            m=10,
+            n=20,
             ):
     &#34;&#34;&#34;
     Create rich logging string.
@@ -187,14 +187,16 @@ def str_log(kind, msg,
     :param msg_bg_color: Message background color.
     :param t_color: Time text color.
     :param t_bg_color: Time background color.
+    :param m: Separation between beginning of TIME string and beginning of KIND string.
+    :param n: Separation between beginning of KIND string and beginning of MSG string.
     &#34;&#34;&#34;
     # Current time
     t = datetime.now().strftime(&#34;%H:%M:%S&#34;)
 
     # Set distances
-    r = join_set_distance(t + &#34; ::&#34;, kind, n)
-    r = join_set_distance(r, &#34; ::&#34;, m)
-    r = join_set_distance(r, msg, len(r))
+    r = join_set_distance(t + &#34; ::&#34;, kind,  m)
+    r = join_set_distance(r,         &#34; ::&#34;, n)
+    r = join_set_distance(r,         msg,   len(r))
 
     str_t, str_kind, str_msg = r.split(&#34; :: &#34;)
 
@@ -650,7 +652,7 @@ cases the ANSI codes will be rendered as text as well.
 </details>
 </dd>
 <dt id="alexandria.shell.str_log"><code class="name flex">
-<span>def <span class="ident">str_log</span></span>(<span>kind, msg, kind_color='black', kind_bg_color='white', msg_color='cyan', msg_bg_color='', t_color='', t_bg_color='', n=10, m=20)</span>
+<span>def <span class="ident">str_log</span></span>(<span>kind, msg, kind_color='black', kind_bg_color='white', msg_color='cyan', msg_bg_color='', t_color='', t_bg_color='', m=10, n=20)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create rich logging string.</p>
@@ -667,7 +669,9 @@ parameters.
 :param msg_color: Message text color.
 :param msg_bg_color: Message background color.
 :param t_color: Time text color.
-:param t_bg_color: Time background color.</p></div>
+:param t_bg_color: Time background color.
+:param m: Separation between beginning of TIME string and beginning of KIND string.
+:param n: Separation between beginning of KIND string and beginning of MSG string.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -679,8 +683,8 @@ parameters.
             msg_bg_color=&#34;&#34;,
             t_color=&#34;&#34;,
             t_bg_color=&#34;&#34;,
-            n=10,
-            m=20,
+            m=10,
+            n=20,
             ):
     &#34;&#34;&#34;
     Create rich logging string.
@@ -701,14 +705,16 @@ parameters.
     :param msg_bg_color: Message background color.
     :param t_color: Time text color.
     :param t_bg_color: Time background color.
+    :param m: Separation between beginning of TIME string and beginning of KIND string.
+    :param n: Separation between beginning of KIND string and beginning of MSG string.
     &#34;&#34;&#34;
     # Current time
     t = datetime.now().strftime(&#34;%H:%M:%S&#34;)
 
     # Set distances
-    r = join_set_distance(t + &#34; ::&#34;, kind, n)
-    r = join_set_distance(r, &#34; ::&#34;, m)
-    r = join_set_distance(r, msg, len(r))
+    r = join_set_distance(t + &#34; ::&#34;, kind,  m)
+    r = join_set_distance(r,         &#34; ::&#34;, n)
+    r = join_set_distance(r,         msg,   len(r))
 
     str_t, str_kind, str_msg = r.split(&#34; :: &#34;)
 
