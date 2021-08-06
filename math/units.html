@@ -41,7 +41,14 @@ def rad(a):
 
 # Mass
 def lbs_to_kg(m):
-    return m*0.453592</code></pre>
+    return m*0.453592
+
+
+# Conversion
+def s_to_hms(_n):
+    hours, remainder = divmod(_n, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;</code></pre>
 </details>
 </section>
 <section>
@@ -90,6 +97,21 @@ def lbs_to_kg(m):
     return a/180*np.pi</code></pre>
 </details>
 </dd>
+<dt id="alexandria.math.units.s_to_hms"><code class="name flex">
+<span>def <span class="ident">s_to_hms</span></span>(<span>_n)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def s_to_hms(_n):
+    hours, remainder = divmod(_n, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -111,6 +133,7 @@ def lbs_to_kg(m):
 <li><code><a title="alexandria.math.units.deg" href="#alexandria.math.units.deg">deg</a></code></li>
 <li><code><a title="alexandria.math.units.lbs_to_kg" href="#alexandria.math.units.lbs_to_kg">lbs_to_kg</a></code></li>
 <li><code><a title="alexandria.math.units.rad" href="#alexandria.math.units.rad">rad</a></code></li>
+<li><code><a title="alexandria.math.units.s_to_hms" href="#alexandria.math.units.s_to_hms">s_to_hms</a></code></li>
 </ul>
 </li>
 </ul>
