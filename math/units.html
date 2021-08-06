@@ -52,7 +52,7 @@ def s_to_hms(n):
     &#34;&#34;&#34;
     hours, remainder = divmod(n, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;
+    return int(hours), int(minutes), seconds
 
 
 def d_to_dms(n):
@@ -62,7 +62,7 @@ def d_to_dms(n):
     &#34;&#34;&#34;
     mnt, sec = divmod(n*3600, 60)
     deg, mnt = divmod(mnt, 60)
-    return f&#39;{int(deg)}:{int(mnt)}:{sec:.2f}&#39;</code></pre>
+    return int(deg), int(mnt), sec</code></pre>
 </details>
 </section>
 <section>
@@ -89,7 +89,7 @@ dd :: mm :: ss.ss</p></div>
     &#34;&#34;&#34;
     mnt, sec = divmod(n*3600, 60)
     deg, mnt = divmod(mnt, 60)
-    return f&#39;{int(deg)}:{int(mnt)}:{sec:.2f}&#39;</code></pre>
+    return int(deg), int(mnt), sec</code></pre>
 </details>
 </dd>
 <dt id="alexandria.math.units.deg"><code class="name flex">
@@ -148,7 +148,7 @@ hh :: m :: ss</p></div>
     &#34;&#34;&#34;
     hours, remainder = divmod(n, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;</code></pre>
+    return int(hours), int(minutes), seconds</code></pre>
 </details>
 </dd>
 </dl>
