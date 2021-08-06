@@ -45,10 +45,24 @@ def lbs_to_kg(m):
 
 
 # Conversion
-def s_to_hms(_n):
-    hours, remainder = divmod(_n, 3600)
+def s_to_hms(n):
+    &#34;&#34;&#34;
+    Decimal seconds to
+        hh :: m :: ss
+    &#34;&#34;&#34;
+    hours, remainder = divmod(n, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;</code></pre>
+    return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;
+
+
+def d_to_dms(n):
+    &#34;&#34;&#34;
+    Decimal degrees to
+        dd :: mm :: ss.ss
+    &#34;&#34;&#34;
+    mnt, sec = divmod(n*3600, 60)
+    deg, mnt = divmod(mnt, 60)
+    return f&#39;{int(deg)}:{int(mnt)}:{sec:.2f}&#39;</code></pre>
 </details>
 </section>
 <section>
@@ -58,6 +72,26 @@ def s_to_hms(_n):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="alexandria.math.units.d_to_dms"><code class="name flex">
+<span>def <span class="ident">d_to_dms</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decimal degrees to
+dd :: mm :: ss.ss</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def d_to_dms(n):
+    &#34;&#34;&#34;
+    Decimal degrees to
+        dd :: mm :: ss.ss
+    &#34;&#34;&#34;
+    mnt, sec = divmod(n*3600, 60)
+    deg, mnt = divmod(mnt, 60)
+    return f&#39;{int(deg)}:{int(mnt)}:{sec:.2f}&#39;</code></pre>
+</details>
+</dd>
 <dt id="alexandria.math.units.deg"><code class="name flex">
 <span>def <span class="ident">deg</span></span>(<span>a)</span>
 </code></dt>
@@ -98,16 +132,21 @@ def s_to_hms(_n):
 </details>
 </dd>
 <dt id="alexandria.math.units.s_to_hms"><code class="name flex">
-<span>def <span class="ident">s_to_hms</span></span>(<span>_n)</span>
+<span>def <span class="ident">s_to_hms</span></span>(<span>n)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Decimal seconds to
+hh :: m :: ss</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def s_to_hms(_n):
-    hours, remainder = divmod(_n, 3600)
+<pre><code class="python">def s_to_hms(n):
+    &#34;&#34;&#34;
+    Decimal seconds to
+        hh :: m :: ss
+    &#34;&#34;&#34;
+    hours, remainder = divmod(n, 3600)
     minutes, seconds = divmod(remainder, 60)
     return f&#39;{int(hours)}:{int(minutes)}:{seconds:.2f}&#39;</code></pre>
 </details>
@@ -130,6 +169,7 @@ def s_to_hms(_n):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="alexandria.math.units.d_to_dms" href="#alexandria.math.units.d_to_dms">d_to_dms</a></code></li>
 <li><code><a title="alexandria.math.units.deg" href="#alexandria.math.units.deg">deg</a></code></li>
 <li><code><a title="alexandria.math.units.lbs_to_kg" href="#alexandria.math.units.lbs_to_kg">lbs_to_kg</a></code></li>
 <li><code><a title="alexandria.math.units.rad" href="#alexandria.math.units.rad">rad</a></code></li>
