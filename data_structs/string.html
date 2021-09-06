@@ -58,7 +58,7 @@ def find_between_quotations(s, q=&#39;&#34;&#39;):
         return print(&#39;No match&#39;)
 
 
-def join_set_distance(s, u, n=20):
+def join_set_distance(s, u, n=20, sep=&#39; &#39;):
     &#34;&#34;&#34;
     :param s: String 1
     :param u: String 2
@@ -70,7 +70,7 @@ def join_set_distance(s, u, n=20):
     if not isinstance(s, type(str)):
         s = str(s)
     m = max(n - len(s.replace(&#34;\n&#34;, &#34;&#34;)), 1)
-    return s + &#39; &#39; * m + u.rstrip()
+    return s + sep * m + u.rstrip()
 
 
 def tuple_to_equal(a):
@@ -143,7 +143,7 @@ def tuple_to_equal(a):
 </details>
 </dd>
 <dt id="alexandria.data_structs.string.join_set_distance"><code class="name flex">
-<span>def <span class="ident">join_set_distance</span></span>(<span>s, u, n=20)</span>
+<span>def <span class="ident">join_set_distance</span></span>(<span>s, u, n=20, sep=' ')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>:param s: String 1
@@ -156,7 +156,7 @@ String 2 equals <em>n</em>.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def join_set_distance(s, u, n=20):
+<pre><code class="python">def join_set_distance(s, u, n=20, sep=&#39; &#39;):
     &#34;&#34;&#34;
     :param s: String 1
     :param u: String 2
@@ -168,7 +168,7 @@ String 2 equals <em>n</em>.</p></div>
     if not isinstance(s, type(str)):
         s = str(s)
     m = max(n - len(s.replace(&#34;\n&#34;, &#34;&#34;)), 1)
-    return s + &#39; &#39; * m + u.rstrip()</code></pre>
+    return s + sep * m + u.rstrip()</code></pre>
 </details>
 </dd>
 <dt id="alexandria.data_structs.string.tuple_to_equal"><code class="name flex">

@@ -28,6 +28,7 @@
 </summary>
 <pre><code class="python">import os
 import sys
+from pyfiglet import Figlet
 from datetime import datetime
 from contextlib import contextmanager
 
@@ -69,6 +70,7 @@ def str_color(string, color, color_bg=&#34;&#34;, highlight=&#34;&#34;):
     ### Available colors:
     - &#39;black&#39;     |   &#39;brightBlack&#39;
     - &#39;red&#39;       |   &#39;brightRed&#39;
+    - &#39;orange&#39;    |   &#39;brightOrange&#39;        - might not be supported
     - &#39;green&#39;     |   &#39;brightGreen&#39;
     - &#39;yellow&#39;    |   &#39;brightYellow&#39;
     - &#39;blue&#39;      |   &#39;brightBlue&#39;
@@ -128,6 +130,7 @@ def print_color(string, color, color_bg=&#34;&#34;, highlight=&#34;&#34;, **kwar
     ### Available colors:
     - &#39;black&#39;     |   &#39;brightBlack&#39;
     - &#39;red&#39;       |   &#39;brightRed&#39;
+    - &#39;orange&#39;    |   &#39;brightOrange&#39;        - might not be supported
     - &#39;green&#39;     |   &#39;brightGreen&#39;
     - &#39;yellow&#39;    |   &#39;brightYellow&#39;
     - &#39;blue&#39;      |   &#39;brightBlue&#39;
@@ -255,6 +258,18 @@ def log(kind, msg,
     print(s, **kwargs)
 
 
+def title(text=&#34;Anchorage&#34;, font=&#34;big&#34;, color=&#34;&#34;):
+    &#34;&#34;&#34;
+    Generate Figlet title.
+
+    :param text: Text to be rendered
+    :param font: Figlet font to render the title
+    :param color: Title color
+    &#34;&#34;&#34;
+    f = Figlet(font=font)
+    return str_color(f.renderText(text), color)
+
+
 def print_numbered_list(lst, length=10):
     &#34;&#34;&#34;
     Print numbered list.
@@ -268,7 +283,7 @@ def print_numbered_list(lst, length=10):
         print(s)
 
 
-def print_result(var, val, u, d=5, n=10):
+def print_result(var, val, u, d=3, n=30):
     &#34;&#34;&#34;
     Pretty print a calculated result.
 
@@ -279,7 +294,7 @@ def print_result(var, val, u, d=5, n=10):
     :param n: Resulting string length
     :return:
     &#34;&#34;&#34;
-    s = join_set_distance(f&#39;{var} {val:.{d}f}&#39;, u, n)
+    s = join_set_distance(f&#39;{var} = {val:,.{d}f}&#39;, u, n)
     print(s)
 
 
@@ -390,6 +405,10 @@ cases the ANSI codes will be rendered as text as well.
 <li>'red'
 |
 'brightRed'</li>
+<li>'orange'
+|
+'brightOrange'
+- might not be supported</li>
 <li>'green'
 |
 'brightGreen'</li>
@@ -450,6 +469,7 @@ cases the ANSI codes will be rendered as text as well.
     ### Available colors:
     - &#39;black&#39;     |   &#39;brightBlack&#39;
     - &#39;red&#39;       |   &#39;brightRed&#39;
+    - &#39;orange&#39;    |   &#39;brightOrange&#39;        - might not be supported
     - &#39;green&#39;     |   &#39;brightGreen&#39;
     - &#39;yellow&#39;    |   &#39;brightYellow&#39;
     - &#39;blue&#39;      |   &#39;brightBlue&#39;
@@ -505,7 +525,7 @@ cases the ANSI codes will be rendered as text as well.
 </details>
 </dd>
 <dt id="alexandria.shell.print_result"><code class="name flex">
-<span>def <span class="ident">print_result</span></span>(<span>var, val, u, d=5, n=10)</span>
+<span>def <span class="ident">print_result</span></span>(<span>var, val, u, d=3, n=30)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Pretty print a calculated result.</p>
@@ -519,7 +539,7 @@ cases the ANSI codes will be rendered as text as well.
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def print_result(var, val, u, d=5, n=10):
+<pre><code class="python">def print_result(var, val, u, d=3, n=30):
     &#34;&#34;&#34;
     Pretty print a calculated result.
 
@@ -530,7 +550,7 @@ cases the ANSI codes will be rendered as text as well.
     :param n: Resulting string length
     :return:
     &#34;&#34;&#34;
-    s = join_set_distance(f&#39;{var} {val:.{d}f}&#39;, u, n)
+    s = join_set_distance(f&#39;{var} = {val:,.{d}f}&#39;, u, n)
     print(s)</code></pre>
 </details>
 </dd>
@@ -556,6 +576,10 @@ cases the ANSI codes will be rendered as text as well.
 <li>'red'
 |
 'brightRed'</li>
+<li>'orange'
+|
+'brightOrange'
+- might not be supported</li>
 <li>'green'
 |
 'brightGreen'</li>
@@ -613,6 +637,7 @@ cases the ANSI codes will be rendered as text as well.
     ### Available colors:
     - &#39;black&#39;     |   &#39;brightBlack&#39;
     - &#39;red&#39;       |   &#39;brightRed&#39;
+    - &#39;orange&#39;    |   &#39;brightOrange&#39;        - might not be supported
     - &#39;green&#39;     |   &#39;brightGreen&#39;
     - &#39;yellow&#39;    |   &#39;brightYellow&#39;
     - &#39;blue&#39;      |   &#39;brightBlue&#39;
@@ -760,6 +785,30 @@ def suppress_stdout():
             sys.stdout = old_stdout</code></pre>
 </details>
 </dd>
+<dt id="alexandria.shell.title"><code class="name flex">
+<span>def <span class="ident">title</span></span>(<span>text='Anchorage', font='big', color='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate Figlet title.</p>
+<p>:param text: Text to be rendered
+:param font: Figlet font to render the title
+:param color: Title color</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def title(text=&#34;Anchorage&#34;, font=&#34;big&#34;, color=&#34;&#34;):
+    &#34;&#34;&#34;
+    Generate Figlet title.
+
+    :param text: Text to be rendered
+    :param font: Figlet font to render the title
+    :param color: Title color
+    &#34;&#34;&#34;
+    f = Figlet(font=font)
+    return str_color(f.renderText(text), color)</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -791,6 +840,7 @@ def suppress_stdout():
 <li><code><a title="alexandria.shell.str_color" href="#alexandria.shell.str_color">str_color</a></code></li>
 <li><code><a title="alexandria.shell.str_log" href="#alexandria.shell.str_log">str_log</a></code></li>
 <li><code><a title="alexandria.shell.suppress_stdout" href="#alexandria.shell.suppress_stdout">suppress_stdout</a></code></li>
+<li><code><a title="alexandria.shell.title" href="#alexandria.shell.title">title</a></code></li>
 </ul>
 </li>
 </ul>
