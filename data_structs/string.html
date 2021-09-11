@@ -38,6 +38,8 @@ String utilities
 
 import re
 
+from alexandria.math.symbols import greek_letters
+
 
 def capletter(s, n):
     &#34;&#34;&#34;
@@ -83,16 +85,49 @@ def join_set_distance(s, u, n=20, sep=&#39; &#39;):
     return s + sep * m + u.rstrip()
 
 
-def tuple_to_equal(a):
+def tuple_to_equal(a, n=20):
     &#34;&#34;&#34;
     :param a: Tuple.
+    :param n: Separation between first and second value of the tuple.
+
     :return: String of the form &#34;tuple[0] = tuple[1]&#34;
     &#34;&#34;&#34;
     chars = r&#34;()&#34;
     for c in chars:
         if c in a:
             a = a.replace(c, &#34;&#34;)
-    return a.replace(&#34;, &#34;, &#34; = &#34;)</code></pre>
+    k, v = a.split(&#39;,&#39;)
+    return join_set_distance(k, &#39;= &#39; + v, n)
+
+
+def sort_based_on_other(l_subject, l_sort):
+    &#34;&#34;&#34;
+    Return both input lists, sorted based on the values of the second.
+
+    :param l_subject: List to be sorted.
+    :param l_sort:    List based on the values of which both lists will be sorted.
+    :return:          Both lists
+    &#34;&#34;&#34;
+    sorted_tuples = [(y, x) for y, x in sorted(zip(l_sort, l_subject), reverse=True)]
+    list_tuples = zip(*sorted_tuples)
+    # Sorted lists (inverted as the pairs were defined as (y, x) above
+    l_sort, l_subject = list(map(list, list_tuples))
+    return l_subject, l_sort
+
+
+def to_latex_vars(s):
+    terms = s.split(&#39;_&#39;)
+    for i in range(len(terms)):
+        if i == 0:
+            pass
+        elif i &gt; 0:
+            terms[i] = &#39;{&#39; + terms[i] + &#39;}$&#39;
+
+        if terms[i][0].isupper():
+            terms[i] = terms[i].title()
+        if terms[i].lower() in greek_letters():
+            terms[i] = f&#39;$\{terms[i]}$&#39;
+    return &#39;$_&#39;.join(terms)</code></pre>
 </details>
 </section>
 <section>
@@ -181,26 +216,83 @@ String 2 equals <em>n</em>.</p></div>
     return s + sep * m + u.rstrip()</code></pre>
 </details>
 </dd>
-<dt id="alexandria.data_structs.string.tuple_to_equal"><code class="name flex">
-<span>def <span class="ident">tuple_to_equal</span></span>(<span>a)</span>
+<dt id="alexandria.data_structs.string.sort_based_on_other"><code class="name flex">
+<span>def <span class="ident">sort_based_on_other</span></span>(<span>l_subject, l_sort)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>:param a: Tuple.
-:return: String of the form "tuple[0] = tuple[1]"</p></div>
+<div class="desc"><p>Return both input lists, sorted based on the values of the second.</p>
+<p>:param l_subject: List to be sorted.
+:param l_sort:
+List based on the values of which both lists will be sorted.
+:return:
+Both lists</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def tuple_to_equal(a):
+<pre><code class="python">def sort_based_on_other(l_subject, l_sort):
+    &#34;&#34;&#34;
+    Return both input lists, sorted based on the values of the second.
+
+    :param l_subject: List to be sorted.
+    :param l_sort:    List based on the values of which both lists will be sorted.
+    :return:          Both lists
+    &#34;&#34;&#34;
+    sorted_tuples = [(y, x) for y, x in sorted(zip(l_sort, l_subject), reverse=True)]
+    list_tuples = zip(*sorted_tuples)
+    # Sorted lists (inverted as the pairs were defined as (y, x) above
+    l_sort, l_subject = list(map(list, list_tuples))
+    return l_subject, l_sort</code></pre>
+</details>
+</dd>
+<dt id="alexandria.data_structs.string.to_latex_vars"><code class="name flex">
+<span>def <span class="ident">to_latex_vars</span></span>(<span>s)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_latex_vars(s):
+    terms = s.split(&#39;_&#39;)
+    for i in range(len(terms)):
+        if i == 0:
+            pass
+        elif i &gt; 0:
+            terms[i] = &#39;{&#39; + terms[i] + &#39;}$&#39;
+
+        if terms[i][0].isupper():
+            terms[i] = terms[i].title()
+        if terms[i].lower() in greek_letters():
+            terms[i] = f&#39;$\{terms[i]}$&#39;
+    return &#39;$_&#39;.join(terms)</code></pre>
+</details>
+</dd>
+<dt id="alexandria.data_structs.string.tuple_to_equal"><code class="name flex">
+<span>def <span class="ident">tuple_to_equal</span></span>(<span>a, n=20)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:param a: Tuple.
+:param n: Separation between first and second value of the tuple.</p>
+<p>:return: String of the form "tuple[0] = tuple[1]"</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tuple_to_equal(a, n=20):
     &#34;&#34;&#34;
     :param a: Tuple.
+    :param n: Separation between first and second value of the tuple.
+
     :return: String of the form &#34;tuple[0] = tuple[1]&#34;
     &#34;&#34;&#34;
     chars = r&#34;()&#34;
     for c in chars:
         if c in a:
             a = a.replace(c, &#34;&#34;)
-    return a.replace(&#34;, &#34;, &#34; = &#34;)</code></pre>
+    k, v = a.split(&#39;,&#39;)
+    return join_set_distance(k, &#39;= &#39; + v, n)</code></pre>
 </details>
 </dd>
 </dl>
@@ -226,6 +318,8 @@ String 2 equals <em>n</em>.</p></div>
 <li><code><a title="alexandria.data_structs.string.capletter" href="#alexandria.data_structs.string.capletter">capletter</a></code></li>
 <li><code><a title="alexandria.data_structs.string.find_between_quotations" href="#alexandria.data_structs.string.find_between_quotations">find_between_quotations</a></code></li>
 <li><code><a title="alexandria.data_structs.string.join_set_distance" href="#alexandria.data_structs.string.join_set_distance">join_set_distance</a></code></li>
+<li><code><a title="alexandria.data_structs.string.sort_based_on_other" href="#alexandria.data_structs.string.sort_based_on_other">sort_based_on_other</a></code></li>
+<li><code><a title="alexandria.data_structs.string.to_latex_vars" href="#alexandria.data_structs.string.to_latex_vars">to_latex_vars</a></code></li>
 <li><code><a title="alexandria.data_structs.string.tuple_to_equal" href="#alexandria.data_structs.string.tuple_to_equal">tuple_to_equal</a></code></li>
 </ul>
 </li>
