@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>alexandria.math.symbols API documentation</title>
-<meta name="description" content="Symbols" />
+<title>alexandria.math.deq_integration API documentation</title>
+<meta name="description" content="Differential equation integration schemes" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,10 +19,10 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>alexandria.math.symbols</code></h1>
+<h1 class="title">Module <code>alexandria.math.deq_integration</code></h1>
 </header>
 <section id="section-intro">
-<h2 id="symbols">Symbols</h2>
+<h2 id="differential-equation-integration-schemes">Differential equation integration schemes</h2>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -31,36 +31,78 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 &#34;&#34;&#34;
-Symbols
--------
+Differential equation integration schemes
+-----------------------------------------
 &#34;&#34;&#34;
 
+import numpy as np
 
-def greek_letters():
-    return [&#39;alpha&#39;,
-            &#39;beta&#39;,
-            &#39;gamma&#39;,
-            &#39;delta&#39;,
-            &#39;epsilon&#39;,
-            &#39;zeta&#39;,
-            &#39;eta&#39;,
-            &#39;theta&#39;,
-            &#39;iota&#39;,
-            &#39;kappa&#39;,
-            &#39;lambda&#39;,
-            &#39;mu&#39;,
-            &#39;nu&#39;,
-            &#39;xi&#39;,
-            &#39;omnikron&#39;,
-            &#39;pi&#39;,
-            &#39;rho&#39;,
-            &#39;sigma&#39;,
-            &#39;tau&#39;,
-            &#39;upsilon&#39;,
-            &#39;phi&#39;,
-            &#39;chi&#39;,
-            &#39;psi&#39;,
-            &#39;omega&#39;]</code></pre>
+
+def newton_euler(f, h, F0, *args, **kwargs):
+    &#34;&#34;&#34;
+    Newton-Euler integration scheme
+    -------------------------------
+
+    :type f:        function
+    :type h:        float
+    :type F0:       float
+    :type args:     list of any
+    :type kwargs:   dict of any
+    &#34;&#34;&#34;
+    F1 = F0 + h*f(F0, *args, **kwargs)
+    return F1
+
+
+def heun(f, h, F0, *args, **kwargs):
+    &#34;&#34;&#34;
+    Heun&#39;s method
+    -------------
+
+    :type f:        function
+    :type h:        float
+    :type F0:       float
+    :type args:     list of any
+    :type kwargs:   dict of any
+    &#34;&#34;&#34;
+    _F1 = F0 + h*f(F0, *args, **kwargs)
+    F1  = F0 + 1/2*(_F1 + h*f(_F1, *args, **kwargs))
+    return F1
+
+
+def runge_kutta_4(f, h, F0, f0, *args, **kwargs):
+    &#34;&#34;&#34;
+    4th order Runge-Kutta integration scheme
+    ----------------------------------------
+
+    For a time and state dependent differential equation.
+
+    :param F0:      Initial value of the function
+    :param f0:      Initial value of the derivative of the function
+
+    :type f:        function
+    :type h:        float
+    :type F0:       float
+    :type f0:       float
+    :type args:     list of any
+    :type kwargs:   dict of any
+    &#34;&#34;&#34;
+
+    k1a = h * f0
+    k1b = h * f(F0, *args, **kwargs)
+
+    k2a = h * (f0 + k1b/2)
+    k2b = h * f(F0 + k1a/2, *args, **kwargs)
+
+    k3a = h * (f0 + k2b/2)
+    k3b = h * f(F0 + k2a/2, *args, **kwargs)
+
+    k4a = h * (f0 + k3b)
+    k4b = h * f(F0 + k3a, *args, **kwargs)
+
+    F1  = F0 + 1/6*(k1a + 2*k2a + 2*k3a + k4a)
+    dF1 = f0 + 1/6*(k1b + 2*k2b + 2*k3b + k4b)
+
+    return np.array([F1, dF1])</code></pre>
 </details>
 </section>
 <section>
@@ -70,40 +112,135 @@ def greek_letters():
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="alexandria.math.symbols.greek_letters"><code class="name flex">
-<span>def <span class="ident">greek_letters</span></span>(<span>)</span>
+<dt id="alexandria.math.deq_integration.heun"><code class="name flex">
+<span>def <span class="ident">heun</span></span>(<span>f, h, F0, *args, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><h2 id="heuns-method">Heun's method</h2>
+<p>:type f:
+function
+:type h:
+float
+:type F0:
+float
+:type args:
+list of any
+:type kwargs:
+dict of any</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def greek_letters():
-    return [&#39;alpha&#39;,
-            &#39;beta&#39;,
-            &#39;gamma&#39;,
-            &#39;delta&#39;,
-            &#39;epsilon&#39;,
-            &#39;zeta&#39;,
-            &#39;eta&#39;,
-            &#39;theta&#39;,
-            &#39;iota&#39;,
-            &#39;kappa&#39;,
-            &#39;lambda&#39;,
-            &#39;mu&#39;,
-            &#39;nu&#39;,
-            &#39;xi&#39;,
-            &#39;omnikron&#39;,
-            &#39;pi&#39;,
-            &#39;rho&#39;,
-            &#39;sigma&#39;,
-            &#39;tau&#39;,
-            &#39;upsilon&#39;,
-            &#39;phi&#39;,
-            &#39;chi&#39;,
-            &#39;psi&#39;,
-            &#39;omega&#39;]</code></pre>
+<pre><code class="python">def heun(f, h, F0, *args, **kwargs):
+    &#34;&#34;&#34;
+    Heun&#39;s method
+    -------------
+
+    :type f:        function
+    :type h:        float
+    :type F0:       float
+    :type args:     list of any
+    :type kwargs:   dict of any
+    &#34;&#34;&#34;
+    _F1 = F0 + h*f(F0, *args, **kwargs)
+    F1  = F0 + 1/2*(_F1 + h*f(_F1, *args, **kwargs))
+    return F1</code></pre>
+</details>
+</dd>
+<dt id="alexandria.math.deq_integration.newton_euler"><code class="name flex">
+<span>def <span class="ident">newton_euler</span></span>(<span>f, h, F0, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="newton-euler-integration-scheme">Newton-Euler integration scheme</h2>
+<p>:type f:
+function
+:type h:
+float
+:type F0:
+float
+:type args:
+list of any
+:type kwargs:
+dict of any</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def newton_euler(f, h, F0, *args, **kwargs):
+    &#34;&#34;&#34;
+    Newton-Euler integration scheme
+    -------------------------------
+
+    :type f:        function
+    :type h:        float
+    :type F0:       float
+    :type args:     list of any
+    :type kwargs:   dict of any
+    &#34;&#34;&#34;
+    F1 = F0 + h*f(F0, *args, **kwargs)
+    return F1</code></pre>
+</details>
+</dd>
+<dt id="alexandria.math.deq_integration.runge_kutta_4"><code class="name flex">
+<span>def <span class="ident">runge_kutta_4</span></span>(<span>f, h, F0, f0, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="4th-order-runge-kutta-integration-scheme">4th order Runge-Kutta integration scheme</h2>
+<p>For a time and state dependent differential equation.</p>
+<p>:param F0:
+Initial value of the function
+:param f0:
+Initial value of the derivative of the function</p>
+<p>:type f:
+function
+:type h:
+float
+:type F0:
+float
+:type f0:
+float
+:type args:
+list of any
+:type kwargs:
+dict of any</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runge_kutta_4(f, h, F0, f0, *args, **kwargs):
+    &#34;&#34;&#34;
+    4th order Runge-Kutta integration scheme
+    ----------------------------------------
+
+    For a time and state dependent differential equation.
+
+    :param F0:      Initial value of the function
+    :param f0:      Initial value of the derivative of the function
+
+    :type f:        function
+    :type h:        float
+    :type F0:       float
+    :type f0:       float
+    :type args:     list of any
+    :type kwargs:   dict of any
+    &#34;&#34;&#34;
+
+    k1a = h * f0
+    k1b = h * f(F0, *args, **kwargs)
+
+    k2a = h * (f0 + k1b/2)
+    k2b = h * f(F0 + k1a/2, *args, **kwargs)
+
+    k3a = h * (f0 + k2b/2)
+    k3b = h * f(F0 + k2a/2, *args, **kwargs)
+
+    k4a = h * (f0 + k3b)
+    k4b = h * f(F0 + k3a, *args, **kwargs)
+
+    F1  = F0 + 1/6*(k1a + 2*k2a + 2*k3a + k4a)
+    dF1 = f0 + 1/6*(k1b + 2*k2b + 2*k3b + k4b)
+
+    return np.array([F1, dF1])</code></pre>
 </details>
 </dd>
 </dl>
@@ -115,7 +252,7 @@ def greek_letters():
 <h1>Index</h1>
 <div class="toc">
 <ul>
-<li><a href="#symbols">Symbols</a></li>
+<li><a href="#differential-equation-integration-schemes">Differential equation integration schemes</a></li>
 </ul>
 </div>
 <ul id="index">
@@ -126,7 +263,9 @@ def greek_letters():
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="alexandria.math.symbols.greek_letters" href="#alexandria.math.symbols.greek_letters">greek_letters</a></code></li>
+<li><code><a title="alexandria.math.deq_integration.heun" href="#alexandria.math.deq_integration.heun">heun</a></code></li>
+<li><code><a title="alexandria.math.deq_integration.newton_euler" href="#alexandria.math.deq_integration.newton_euler">newton_euler</a></code></li>
+<li><code><a title="alexandria.math.deq_integration.runge_kutta_4" href="#alexandria.math.deq_integration.runge_kutta_4">runge_kutta_4</a></code></li>
 </ul>
 </li>
 </ul>
