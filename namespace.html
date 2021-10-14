@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>alexandria API documentation</title>
-<meta name="description" content="Welcome to the Alexandria API documentation! …" />
+<title>alexandria.namespace API documentation</title>
+<meta name="description" content="Namespace utilities" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,69 +19,140 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>alexandria</code></h1>
+<h1 class="title">Module <code>alexandria.namespace</code></h1>
 </header>
 <section id="section-intro">
-<p>Welcome to the Alexandria API documentation!</p>
-<h1 id="tldr">TL;DR</h1>
-<p>Alexandria is a Python general utilities package.</p>
+<h2 id="namespace-utilities">Namespace utilities</h2>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
-.. include:: ./documentation.md
-&#34;&#34;&#34;</code></pre>
+<pre><code class="python"># SPDX-FileCopyrightText: © 2021 Antonio López Rivera &lt;antonlopezr99@gmail.com&gt;
+# SPDX-License-Identifier: GPL-3.0-only
+
+&#34;&#34;&#34;
+Namespace utilities
+-------------------
+&#34;&#34;&#34;
+
+
+import sys
+import inspect
+
+
+def setattr_namespace(o, namespace):
+    &#34;&#34;&#34;
+    Set all variables declared in a namespace as as attributes
+    of a class instance.
+    ---
+
+    1. Obtain list of module names
+    2. Get namespace variables
+       - Discard all variables with names starting and ending with &#39;_&#39;
+    3. Create a dictionary of namespace variable names and values
+    4. Set namespace variables as attributes of the input object
+       - Given class instance _o_ will not set as attribute of itself
+       - The parent class of _o_ will not be set as an attribute of _o_
+         if present in the provided namespace.
+
+    :param o: Instance of any given class.
+    :param namespace: A given namespace.
+                      - locals()
+                      - globals()
+
+    :type o: object
+    :type namespace: dict
+    &#34;&#34;&#34;
+    # List of module names
+    _mods_ = list(set(sys.modules) &amp; set(namespace))
+    # List of function arguments
+    _args_ = setattr_namespace.__code__.co_varnames
+    # Get namespace variables:
+    #    List of local variables which are not special variables nor module names
+    keys = [key for key in namespace.keys() if (key[0] != &#39;_&#39; and key[-1] != &#39;_&#39;) and key not in _mods_]
+    # Dictionary of namespace variable names and values
+    vars = {key: namespace[key] for key in keys}
+    for key, value in vars.items():
+        if not type(value) == type(o)\
+                and not isinstance(o, value if inspect.isclass(value) else type(value)):  # Avoid _o_, parent of _o_
+            # Set namespace variables as attributes of the input object
+            setattr(o, key, value)</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt><code class="name"><a title="alexandria.data_structs" href="data_structs/index.html">alexandria.data_structs</a></code></dt>
+<dt id="alexandria.namespace.setattr_namespace"><code class="name flex">
+<span>def <span class="ident">setattr_namespace</span></span>(<span>o, namespace)</span>
+</code></dt>
 <dd>
-<div class="desc"><p>Data structure utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.file" href="file/index.html">alexandria.file</a></code></dt>
-<dd>
-<div class="desc"><p>File utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.logic" href="logic.html">alexandria.logic</a></code></dt>
-<dd>
-<div class="desc"><p>Simple logical clauses</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.math" href="math/index.html">alexandria.math</a></code></dt>
-<dd>
-<div class="desc"><p>Math utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.namespace" href="namespace.html">alexandria.namespace</a></code></dt>
-<dd>
-<div class="desc"><p>Namespace utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.paths" href="paths.html">alexandria.paths</a></code></dt>
-<dd>
-<div class="desc"><p>Path string utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.regex" href="regex.html">alexandria.regex</a></code></dt>
-<dd>
-<div class="desc"><p>Regex utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.shell" href="shell/index.html">alexandria.shell</a></code></dt>
-<dd>
-<div class="desc"><p>Shell utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.signals" href="signals/index.html">alexandria.signals</a></code></dt>
-<dd>
-<div class="desc"><p>Signal processing utilities</p></div>
-</dd>
-<dt><code class="name"><a title="alexandria.sys" href="sys.html">alexandria.sys</a></code></dt>
-<dd>
-<div class="desc"><p>Operating system utilities</p></div>
+<div class="desc"><p>Set all variables declared in a namespace as as attributes
+of a class instance.</p>
+<hr>
+<ol>
+<li>Obtain list of module names</li>
+<li>Get namespace variables</li>
+<li>Discard all variables with names starting and ending with '_'</li>
+<li>Create a dictionary of namespace variable names and values</li>
+<li>Set namespace variables as attributes of the input object</li>
+<li>Given class instance <em>o</em> will not set as attribute of itself</li>
+<li>The parent class of <em>o</em> will not be set as an attribute of <em>o</em>
+if present in the provided namespace.</li>
+</ol>
+<p>:param o: Instance of any given class.
+:param namespace: A given namespace.
+- locals()
+- globals()</p>
+<p>:type o: object
+:type namespace: dict</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setattr_namespace(o, namespace):
+    &#34;&#34;&#34;
+    Set all variables declared in a namespace as as attributes
+    of a class instance.
+    ---
+
+    1. Obtain list of module names
+    2. Get namespace variables
+       - Discard all variables with names starting and ending with &#39;_&#39;
+    3. Create a dictionary of namespace variable names and values
+    4. Set namespace variables as attributes of the input object
+       - Given class instance _o_ will not set as attribute of itself
+       - The parent class of _o_ will not be set as an attribute of _o_
+         if present in the provided namespace.
+
+    :param o: Instance of any given class.
+    :param namespace: A given namespace.
+                      - locals()
+                      - globals()
+
+    :type o: object
+    :type namespace: dict
+    &#34;&#34;&#34;
+    # List of module names
+    _mods_ = list(set(sys.modules) &amp; set(namespace))
+    # List of function arguments
+    _args_ = setattr_namespace.__code__.co_varnames
+    # Get namespace variables:
+    #    List of local variables which are not special variables nor module names
+    keys = [key for key in namespace.keys() if (key[0] != &#39;_&#39; and key[-1] != &#39;_&#39;) and key not in _mods_]
+    # Dictionary of namespace variable names and values
+    vars = {key: namespace[key] for key in keys}
+    for key, value in vars.items():
+        if not type(value) == type(o)\
+                and not isinstance(o, value if inspect.isclass(value) else type(value)):  # Avoid _o_, parent of _o_
+            # Set namespace variables as attributes of the input object
+            setattr(o, key, value)</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
 </section>
 <section>
 </section>
@@ -90,22 +161,18 @@
 <h1>Index</h1>
 <div class="toc">
 <ul>
-<li><a href="#tldr">TL;DR</a></li>
+<li><a href="#namespace-utilities">Namespace utilities</a></li>
 </ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="alexandria.data_structs" href="data_structs/index.html">alexandria.data_structs</a></code></li>
-<li><code><a title="alexandria.file" href="file/index.html">alexandria.file</a></code></li>
-<li><code><a title="alexandria.logic" href="logic.html">alexandria.logic</a></code></li>
-<li><code><a title="alexandria.math" href="math/index.html">alexandria.math</a></code></li>
-<li><code><a title="alexandria.namespace" href="namespace.html">alexandria.namespace</a></code></li>
-<li><code><a title="alexandria.paths" href="paths.html">alexandria.paths</a></code></li>
-<li><code><a title="alexandria.regex" href="regex.html">alexandria.regex</a></code></li>
-<li><code><a title="alexandria.shell" href="shell/index.html">alexandria.shell</a></code></li>
-<li><code><a title="alexandria.signals" href="signals/index.html">alexandria.signals</a></code></li>
-<li><code><a title="alexandria.sys" href="sys.html">alexandria.sys</a></code></li>
+<li><code><a title="alexandria" href="index.html">alexandria</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="alexandria.namespace.setattr_namespace" href="#alexandria.namespace.setattr_namespace">setattr_namespace</a></code></li>
 </ul>
 </li>
 </ul>
