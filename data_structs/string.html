@@ -85,21 +85,6 @@ def join_set_distance(s, u, n=20, sep=&#39; &#39;):
     return s + sep * m + u.rstrip()
 
 
-def tuple_to_equal(a, n=20):
-    &#34;&#34;&#34;
-    :param a: Tuple.
-    :param n: Separation between first and second value of the tuple.
-
-    :return: String of the form &#34;tuple[0] = tuple[1]&#34;
-    &#34;&#34;&#34;
-    chars = r&#34;()&#34;
-    for c in chars:
-        if c in a:
-            a = a.replace(c, &#34;&#34;)
-    k, v = a.split(&#39;,&#39;)
-    return join_set_distance(k, &#39;= &#39; + v, n)
-
-
 def sort_based_on_other(l_subject, l_sort):
     &#34;&#34;&#34;
     Return both input lists, sorted based on the values of the second.
@@ -269,32 +254,6 @@ Both lists</p></div>
     return &#39;$_&#39;.join(terms)</code></pre>
 </details>
 </dd>
-<dt id="alexandria.data_structs.string.tuple_to_equal"><code class="name flex">
-<span>def <span class="ident">tuple_to_equal</span></span>(<span>a, n=20)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>:param a: Tuple.
-:param n: Separation between first and second value of the tuple.</p>
-<p>:return: String of the form "tuple[0] = tuple[1]"</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def tuple_to_equal(a, n=20):
-    &#34;&#34;&#34;
-    :param a: Tuple.
-    :param n: Separation between first and second value of the tuple.
-
-    :return: String of the form &#34;tuple[0] = tuple[1]&#34;
-    &#34;&#34;&#34;
-    chars = r&#34;()&#34;
-    for c in chars:
-        if c in a:
-            a = a.replace(c, &#34;&#34;)
-    k, v = a.split(&#39;,&#39;)
-    return join_set_distance(k, &#39;= &#39; + v, n)</code></pre>
-</details>
-</dd>
 </dl>
 </section>
 <section>
@@ -320,7 +279,6 @@ Both lists</p></div>
 <li><code><a title="alexandria.data_structs.string.join_set_distance" href="#alexandria.data_structs.string.join_set_distance">join_set_distance</a></code></li>
 <li><code><a title="alexandria.data_structs.string.sort_based_on_other" href="#alexandria.data_structs.string.sort_based_on_other">sort_based_on_other</a></code></li>
 <li><code><a title="alexandria.data_structs.string.to_latex_vars" href="#alexandria.data_structs.string.to_latex_vars">to_latex_vars</a></code></li>
-<li><code><a title="alexandria.data_structs.string.tuple_to_equal" href="#alexandria.data_structs.string.tuple_to_equal">tuple_to_equal</a></code></li>
 </ul>
 </li>
 </ul>
